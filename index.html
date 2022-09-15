@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo</title>
+
+    <style>
+        body {
+            background-color: lightgray;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-width: 100vw;
+        }
+
+        .bingo {
+            background: #FFF;
+            display: flex;
+            flex-direction: row-reverse;
+            width: 33rem;
+            border-radius: 5px;
+        }
+
+        .numbers {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 300px;
+            padding: 1rem;
+        }
+
+        .number {
+            display: flex;
+            width: 2rem;
+            height: 2rem;
+            text-align: center;
+            border: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .number-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 11rem;
+        }
+
+        .current-number {
+            font-size: 72px;
+        }
+
+        .previous-number {
+            font-size: 20px;
+        }
+
+        #next-number {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        #button {
+            outline: none;
+            padding: 7px;
+            width: 10rem;
+            background-color: lightseagreen;
+            color: #FFF;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #button:hover {
+            background-color: rgb(41, 113, 110);
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <div class="bingo">
+                <div id="numbers" class="numbers">
+
+                </div>
+                <div class="number-screen">
+                    <div id="current-number" class="current-number">
+
+                    </div>
+                    <div id="previous-number" class="previous-number">
+
+                    </div>
+                </div>
+            </div>
+            <div id="next-number" class="next-number">
+                <button id="button">Next Number</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function generateNumberBetween(to) {
+            return (Math.floor(Math.random() * to));
+        }
+
+        const numbers = 99;
+        const numbersPicket = [];
+        const numbersToPicket = [];
+
+        let currentNumber = "";
+        let previousNumber = "";
+
+        const numbersElement = document.getElementById("numbers");
+
+        for (let i = 1; i <= numbers; i++) {
+            const numberEl = document.createElement("span");
+            numberEl.innerText = new String(i);
+            numberEl.id = new String(i);
+            numberEl.classList.add("number");
+            numbersElement.appendChild(numberEl);
+
+            numbersToPicket.push(i);
+        }
+
+        const buttonEl = document.getElementById("button");
+
+        buttonEl.addEventListener("click", () => {
+            const randomNumberMath = generateNumberBetween(numbersToPicket.length);
+
+            console.log("number:", randomNumberMath);
+
+            const numberPicket = numbersToPicket[randomNumberMath];
+
+            const prevPrevEl = document.getElementById(previousNumber);
+            if (prevPrevEl) {
+                prevPrevEl.style.backgroundColor = "gray";
+            }
+
+            const cell = document.getElementById(new String(numberPicket));
+            if (cell) {
+                cell.style.backgroundColor = "yellow";
+
+                numbersPicket.push(numberPicket);
+                numbersToPicket.splice(randomNumberMath, 1);
+
+                previousNumber = currentNumber;
+                currentNumber = numberPicket;
+
+                document.getElementById("previous-number").innerText = previousNumber;
+                document.getElementById("current-number").innerText = currentNumber;
+
+                const prevEl = document.getElementById(previousNumber);
+                if (prevEl) {
+                    prevEl.style.backgroundColor = "lightgray";
+                }
+            }
+        });
+
+    </script>
+</body>
+
+</html>
