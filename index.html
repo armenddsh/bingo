@@ -8,6 +8,13 @@
     <title>Bingo</title>
 
     <style>
+
+        *::before,*::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             background-color: lightgray;
         }
@@ -17,15 +24,14 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            min-width: 100vw;
         }
 
         .bingo {
             background: #FFF;
             display: flex;
             flex-direction: row-reverse;
-            width: 33rem;
             border-radius: 5px;
+            width: 40rem;
         }
 
         .numbers {
@@ -52,7 +58,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 11rem;
+            width: 48%;
         }
 
         .current-number {
@@ -79,9 +85,52 @@
             border-radius: 5px;
         }
 
+        .cell {
+          padding: 10px;
+          width: 30px;
+          height: 15px;
+          text-align: center;
+          flex: 1;
+        }
+
         #button:hover {
             background-color: rgb(41, 113, 110);
             cursor: pointer;
+        }
+
+        .bingo-text {
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            color: green;
+            margin-bottom: 1rem;
+        }
+
+        @media (min-width: 481px) and (max-width: 767px) {
+            .bingo {
+                background: #FFF;
+                display: flex;
+                align-items: center;
+                flex-direction: column-reverse;
+                border-radius: 5px;
+                width: 28rem;
+            }
+        }
+        
+        /* 
+            ##Device = Most of the Smartphones Mobiles (Portrait)
+            ##Screen = B/w 320px to 479px
+          */
+        
+        @media (min-width: 320px) and (max-width: 480px) {
+            .bingo {
+                background: #FFF;
+                display: flex;
+                align-items: center;
+                flex-direction: column-reverse;
+                border-radius: 5px;
+                width: 20rem;
+            }
         }
     </style>
 </head>
@@ -89,16 +138,17 @@
 <body>
     <div class="wrapper">
         <div class="container">
+            <div class="bingo-text">Bingo</div>
             <div class="bingo">
                 <div id="numbers" class="numbers">
 
                 </div>
                 <div class="number-screen">
                     <div id="current-number" class="current-number">
-
+                        -
                     </div>
                     <div id="previous-number" class="previous-number">
-
+                        -
                     </div>
                 </div>
             </div>
@@ -127,7 +177,7 @@
             const numberEl = document.createElement("span");
             numberEl.innerText = new String(i);
             numberEl.id = new String(i);
-            numberEl.classList.add("number");
+            numberEl.classList.add("cell");
             numbersElement.appendChild(numberEl);
 
             numbersToPicket.push(i);
